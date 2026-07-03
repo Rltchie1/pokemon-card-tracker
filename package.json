@@ -8,7 +8,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "sync:cards": "node scripts/sync-pokemon-cards.mjs"
   },
   "dependencies": {
     "expo": "54.0.0",
