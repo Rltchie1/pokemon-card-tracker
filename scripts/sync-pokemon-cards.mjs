@@ -1,11 +1,30 @@
 import { writeFileSync } from 'node:fs';
 
-const SUPABASE_URL = process.env.SUPABASE_URL;
+const RAW_SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const POKEMON_TCG_API_KEY = process.env.POKEMON_TCG_API_KEY;
 
 const PAGE_SIZE = 250;
 const POKEMON_API_URL = 'https://api.pokemontcg.io/v2/cards';
+
+function normalizeSupabaseUrl(rawUrl) {
+  if (!rawUrl) return null;
+  const trimmed = rawUrl.trim().replace(/\/+$/, '');
+
+  if (trimmed.includes('supabase.com/dashboard') || trimmed.includes('/project/')) {
+    console.error('SUPABASE_URL looks like a Supabase dashboard URL. Use the Project URL instead, like https://abc123.supabase.co');
+    process.exit(1);
+  }
+
+  if (!trimmed.startsWith('https://') || !trimmed.includes('.supabase.co')) {
+    console.error('SUPABASE_URL should look like https://abc123.supabase.co');
+    process.exit(1);
+  }
+
+  return trimmed;
+}
+
+const SUPABASE_URL = normalizeSupabaseUrl(RAW_SUPABASE_URL);
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
   console.error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY environment variables.');
