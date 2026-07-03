@@ -1,0 +1,14 @@
+{
+  "name": "pokemon-card-tracker",
+  "version": "0.1.0",
+  "private": true,
+  "main": "expo/AppEntry.js",
+  "scripts": {
+    "start": "expo start"
+  },
+  "dependencies": {
+    "expo": "^57.0.0",
+    "react": "^19.2.0",
+    "react-native": "^0.86.0"
+  }
+}
